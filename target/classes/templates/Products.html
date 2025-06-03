@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="navBar">
+<head>
+    <meta charset="UTF-8">
+    <title>Products Page</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.5/css/bootstrap.min.css">
+
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="p-4">
+        <div class="card">
+            <div class="card-header bg-secondary">
+                <h2>Liste des Produits</h2>
+
+            </div>
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-4">
+                    <form method="get" th:action="@{/user/index}" class="d-flex align-items-center gap-2">
+                        <label class="me-3 mb-0">Keyword</label>
+                        <input type="text" class="form-control rounded-2" name="keyword" th:value="${keyword}">
+                        <button type="submit" class="btn btn-secondary">Search</button>
+                    </form>
+
+                    <a sec:authorize="hasRole('ADMIN')" class="btn btn-primary ms-auto"
+                       th:href="@{/admin/addProduct}">Add new product</a>
+                </div>
+
+                <div class="card-body">
+                    <table class="table">
+                        <thead class="bg-primary">
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Product Name
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+
+                        </thead>
+                        <tr th:each="p:${productsList}">
+                            <td th:text="${p.id}"></td>
+                            <td th:text="${p.name}"></td>
+                            <td th:text="${p.price}"></td>
+                            <td th:text="${p.quantity}"></td>
+                            <!--                    <td sec:authorize="hasRole('ADMIN')"><a onclick="return confirm('Vous etes sur ??')"-->
+                            <!--                           th:href="@{/admin/delete(id = ${p.id})}"-->
+                            <!--                           class="btn btn-danger">Delete</a></td>-->
+                            <td sec:authorize="hasRole('ADMIN')">
+                                <form method="post" th:action="@{/admin/delete(id = ${p.id},)}">
+                                    <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Vous etes sur ??')">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                            <td sec:authorize="hasRole('ADMIN')"><a
+                                    th:href="@{/admin/edit(id = ${p.id}, Kw=${keyword}) }"
+                                    class="btn btn-primary">Edit</a></td>
+                        </tr>
+                    </table>
+                    <!--            <div class="card-footer flex">-->
+                    <!--                <ul class="nav nav-pills align-content-center justify-content-center">-->
+                    <!--                    <li th:each="page, status:${pages}">-->
+                    <!--                        <a th:href="@{/user/index(page = ${status.index},keyword=${keyword})}"-->
+                    <!--                           th:class="${currentPage==status.index?'btn btn-dark':'btn btn-outline-dark m-1'}" th:text="${status.index +1}"></a>-->
+                    <!--                    </li>-->
+                    <!--                </ul>-->
+                    <!--            </div>-->
+                </div>
+            </div>
+        </div>
+        <div><h1>
+
+        </h1></div>
+    </div>
+</div>
+</body>
+</html>
