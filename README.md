@@ -143,18 +143,3 @@ spring.h2.console.enabled=true
 * Redirection automatique vers une page d’erreur en cas d’accès non autorisé.
 
 ---
-
-### 📦 7. Dépendances Utilisées
-
-Le projet utilise les modules suivants de Spring Boot et autres bibliothèques :
-
-1. Spring Web
-2. Spring Data JPA
-3. Spring Security
-4. Thymeleaf
-5. Lombok
-6. DevTools
-7. Webjars (Bootstrap)
-8. MySQL Connector (optionnel pour bascule vers une base réelle)
-
----
